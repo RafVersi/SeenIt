@@ -16,6 +16,21 @@ export class Movie{
         this.authorId = movie.authorId;
     }
 
+    validate(movie: {name: string; year: number; img: string; authorId: Author}) {
+        if(!movie.name.trim()){
+            throw new Error('Movie has to have a name');
+        }
+        if(!movie.year){
+            throw new Error('Year of release is required');
+        }
+        if(!movie.img.trim()){
+            throw new Error('Image is required');
+        }
+        if(!movie.authorId){
+            throw new Error('Author is required');
+        }
+    }
+
     setId(id: number){
         this.id = id;
     }
