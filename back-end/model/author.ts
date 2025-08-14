@@ -7,8 +7,9 @@ export class Author {
     private fullname: string;
     private birth: Date;
     private age: number;
+    private img: string;
 
-    constructor(author: {id?: number; firstname: string; lastname: string; fullname: string; birth: Date; age: number}){
+    constructor(author: {id?: number; firstname: string; lastname: string; fullname: string; birth: Date; age: number; img: string}){
         this.validate(author);
 
         this.id = author.id;
@@ -17,9 +18,10 @@ export class Author {
         this.fullname = author.fullname;
         this.birth = author.birth;
         this.age = author.age;
+        this.img = author.img;
     }
 
-    validate(author: {firstname: string; lastname: string; birth: Date}) {
+    validate(author: {firstname: string; lastname: string; birth: Date; img: string}) {
         if(!author.firstname.trim()){
             throw new Error('firstname is required');
         }
@@ -28,6 +30,9 @@ export class Author {
         }
         if(!author.birth){
             throw new Error('birthdate is required');
+        }
+        if(!author.img.trim()){
+            throw new Error('image is required');
         }
     }
 
@@ -48,6 +53,9 @@ export class Author {
     }
     setAge(age: number){
         this.age = age;
+    }
+    setImg(img: string){
+        this.img = img;
     }
 
     getId(): number | undefined {
@@ -74,6 +82,9 @@ export class Author {
         if (!hasHadBirthdayThisYear) age--;
         return age;
     }
+    getImg(): string {
+        return this.img;
+    }
 
     equals(author: Author): boolean {
         return (
@@ -82,18 +93,20 @@ export class Author {
             this.lastname === author.getLastname() &&
             this.fullname === author.getFullname() &&
             this.birth === author.getBirth() &&
-            this.age === author.getAge()
+            this.age === author.getAge() &&
+            this.img === author.getImg()
         )
     }
 
-    static from({id, firstname, lastname, fullname, birth, age}: AuthorPrisma){
+    static from({id, firstname, lastname, fullname, birth, age, img}: AuthorPrisma){
         return new Author({
             id,
             firstname,
             lastname,
             fullname,
             birth,
-            age
+            age,
+            img
         });
     }
 }
