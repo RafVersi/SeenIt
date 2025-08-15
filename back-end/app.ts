@@ -6,6 +6,7 @@ import bodyParser from 'body-parser';
 import swaggerJSDoc from 'swagger-jsdoc';
 import swaggerUi from 'swagger-ui-express';
 import { expressjwt } from 'express-jwt';
+import { authorRouter } from './controller/author.routes';
 
 const app = express();
 
@@ -25,9 +26,12 @@ app.use(
             '/api-docs',
             /^\/api-docs\/.*/,
             '/status',
+            '/authors',
         ],
     })
 );
+
+app.use('/authors', authorRouter);
 
 app.get('/status', (req, res) => {
     res.json({ message: 'SeenIt API is running...' });
