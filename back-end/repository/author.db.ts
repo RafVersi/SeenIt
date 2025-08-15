@@ -24,7 +24,7 @@ const getAuthorById = async ({ id }: { id: number }): Promise<Author | null> => 
     }
 };
 
-const getUserByFullname = async ({ fullname }: { fullname: string }): Promise<Author | null> => {
+const getAuthorByFullname = async ({ fullname }: { fullname: string }): Promise<Author | null> => {
     try {
         const authorPrisma = await database.author.findFirst({
             where: { fullname },
@@ -85,7 +85,7 @@ const deleteAuthor = async (id: number): Promise<void> => {
 export default {
     getAllAuthors,
     getAuthorById,
-    getUserByFullname,
+    getAuthorByFullname,
     createAuthor,
     updateAuthor,
     deleteAuthor

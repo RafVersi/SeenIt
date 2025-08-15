@@ -6,17 +6,17 @@ export class Movie{
     private name: string;
     private year: number;
     private img: string;
-    private authorId: Author
+    private author: Author
 
-    constructor(movie: { id?: number; name: string; year: number; img: string; authorId: Author}){
+    constructor(movie: { id?: number; name: string; year: number; img: string; author: Author}){
         this.id = movie.id;
         this.name = movie.name;
         this.year = movie.year;
         this.img = movie.img;
-        this.authorId = movie.authorId;
+        this.author = movie.author;
     }
 
-    validate(movie: {name: string; year: number; img: string; authorId: Author}) {
+    validate(movie: {name: string; year: number; img: string; author: Author}) {
         if(!movie.name.trim()){
             throw new Error('Movie has to have a name');
         }
@@ -26,7 +26,7 @@ export class Movie{
         if(!movie.img.trim()){
             throw new Error('Image is required');
         }
-        if(!movie.authorId){
+        if(!movie.author){
             throw new Error('Author is required');
         }
     }
@@ -43,8 +43,8 @@ export class Movie{
     setFullname(img: string){
         this.img = img;
     }
-    setAuthorId(author: Author){
-        this.authorId = author;
+    setAuthor(author: Author){
+        this.author = author;
     }
 
     getId(): number | undefined {
@@ -59,8 +59,8 @@ export class Movie{
     getImg(): string {
         return this.img;
     }
-    getAuthorId(): Author {
-        return this.authorId;
+    getAuthor(): Author {
+        return this.author;
     }
 
     equals(movie: Movie): boolean {
@@ -69,19 +69,19 @@ export class Movie{
             this.name === movie.getName() &&
             this.year === movie.getYear() &&
             this.img === movie.getImg() &&
-            this.authorId === movie.getAuthorId()
+            this.author === movie.getAuthor()
         )
     }
 
-    static from({id, name, year, img, authorId}: MoviePrisma & {
-        authorId: AuthorPrisma;
+    static from({id, name, year, img, author}: MoviePrisma & {
+        author: AuthorPrisma;
     }){
             return new Movie({
                 id,
                 name,
                 year,
                 img,
-                authorId: Author.from(authorId)
+                author: Author.from(author)
             });
         }
 }
