@@ -7,6 +7,7 @@ import swaggerJSDoc from 'swagger-jsdoc';
 import swaggerUi from 'swagger-ui-express';
 import { expressjwt } from 'express-jwt';
 import { authorRouter } from './controller/author.routes';
+import { movieRouter } from './controller/movie.routes';
 
 const app = express();
 
@@ -27,11 +28,13 @@ app.use(
             /^\/api-docs\/.*/,
             '/status',
             '/authors',
+            '/movies'
         ],
     })
 );
 
 app.use('/authors', authorRouter);
+app.use('/movies', movieRouter);
 
 app.get('/status', (req, res) => {
     res.json({ message: 'SeenIt API is running...' });
@@ -41,7 +44,7 @@ const swaggerOpts = {
     definition: {
         openapi: '3.0.0',
         info: {
-            title: 'Exam API',
+            title: 'SeenIt API',
             version: '1.0.0',
         },
     },
