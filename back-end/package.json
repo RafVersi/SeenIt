@@ -2,14 +2,14 @@
   "name": "back-end",
   "version": "1.0.0",
   "description": "SeenIt API",
-  "type": "module",
+  "type": "commonjs",
   "main": "app.ts",
   "prisma": {
     "schema": "repository/prisma/schema.prisma"
   },
   "scripts": {
-    "dev": "ts-node --esm app.ts",
-    "start": "nodemon --exec ts-node --esm app.ts",
+    "dev": "ts-node app.ts",
+    "start": "nodemon --exec ts-node app.ts",
     "test": "jest"
   },
   "keywords": [],
