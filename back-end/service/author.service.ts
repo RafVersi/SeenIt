@@ -1,7 +1,6 @@
 import { Author } from '../model/author';
 import authorDb from '../repository/author.db';
 import { AuthorInput } from '../types';
-import database from '../util/database';
 
 const getAuthors = async (authorInput?: AuthorInput): Promise<Author[]> => authorDb.getAllAuthors();
 
@@ -66,9 +65,8 @@ const updateAuthor = async (authorInput: AuthorInput): Promise<Author | null> =>
     const birth = authorInput.birth ?? existingAuthor.getBirth();
     const img = authorInput.img ?? existingAuthor.getImg();
     const fullname = `${firstname} ${lastname}`;
-    let age: number;
     const now = new Date();
-    age = now.getFullYear() - birth.getFullYear();
+    let age = now.getFullYear() - birth.getFullYear();
     const hasHadBirthday = now.getMonth() > birth.getMonth() || (now.getMonth() === birth.getMonth() && now.getDate() >= birth.getDate());
     if (!hasHadBirthday) age--;
 
