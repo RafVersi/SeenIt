@@ -7,3 +7,10 @@ export type Author = {
     age: number;
     img: string; 
 }
+
+export type CreateAuthor = {
+    firstname: string;
+    lastname: string;
+    birth: Date;
+    img: string; 
+}

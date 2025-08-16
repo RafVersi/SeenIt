@@ -1,4 +1,4 @@
-import { Author } from "@/types";
+import { CreateAuthor } from "@/types";
 
 const getAllAuthors = () => {
     return fetch(process.env.NEXT_PUBLIC_API_URL + "/authors", {
@@ -9,6 +9,17 @@ const getAllAuthors = () => {
     });
 };
 
+const createAuthor = (author: CreateAuthor) => {
+    return fetch(process.env.NEXT_PUBLIC_API_URL + "/authors", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify(author)
+    });
+}
+
 export default {
-    getAllAuthors
+    getAllAuthors,
+    createAuthor
 }
