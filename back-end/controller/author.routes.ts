@@ -17,8 +17,9 @@
  *            fullname:
  *              type: string
  *              description: Full name of the author.
- *            date:
- *              type: date-time
+ *            birth:
+ *              type: string
+ *              format: date-time
  *              description: Date of birth.
  *            age:
  *              type: number
@@ -88,32 +89,6 @@ authorRouter.get('/:id', async (req: Request<{ id: string }>, res: Response, nex
 
 /**
  * @swagger
- * /authors/fullname:
- *   get:
- *     summary: Get a specific author by fullname
- *     parameters:
- *       - in: path
- *         name: fullname
- *         required: true
- *         schema:
- *           type: string
- *     responses:
- *       200:
- *         description: An author object.
- */
-authorRouter.get('/fullname', async (req: Request<{ fullname: string }>, res: Response, next: NextFunction) => {
-    try {
-        const fullname = req.query.fullname as string;
-        const author = await authorService.getAuthorByFullname({fullname});
-
-        res.status(200).json(author);
-    } catch (error) {
-        next(error);
-    }
-});
-
-/**
- * @swagger
  * /authors:
  *   post:
  *     summary: adding an author
@@ -130,8 +105,9 @@ authorRouter.get('/fullname', async (req: Request<{ fullname: string }>, res: Re
  *               lastname:
  *                 type: string
  *                 description: new lastname
- *               date:
- *                 type: date-time
+ *               birth:
+ *                 type: string
+ *                 format: date-time
  *                 description: new date of birth
  *               img:
  *                 type: string
@@ -139,7 +115,7 @@ authorRouter.get('/fullname', async (req: Request<{ fullname: string }>, res: Re
  *             required:
  *               - firstname
  *               - lastname
- *               - date
+ *               - birth
  *     responses:
  *       201:
  *         description: created author
@@ -174,14 +150,18 @@ authorRouter.post(
  *           schema:
  *             type: object
  *             properties:
+ *               id:
+ *                 type: number
+ *                 format: int64
  *               firstname:
  *                 type: string
  *                 description: new firstname
  *               lastname:
  *                 type: string
  *                 description: new lastname
- *               date:
- *                 type: date-time
+ *               birth:
+ *                 type: string
+ *                 format: date-time
  *                 description: new date of birth
  *               img:
  *                 type: string
@@ -189,7 +169,7 @@ authorRouter.post(
  *             required:
  *               - firstname
  *               - lastname
- *               - date
+ *               - birth
  *     responses:
  *       201:
  *         description: Author has succesfully been updated
@@ -232,8 +212,8 @@ authorRouter.put(
  */
 authorRouter.delete('/:id', async (req: Request, res: Response, next: NextFunction) => {
     try {
-        const id = parseInt(req.params.id, 10);
-        await authorService.deleteAuthor({id});
+        const id = Number(req.params.id);
+        await authorService.deleteAuthor(id);
 
         res.sendStatus(204);
     } catch (error) {

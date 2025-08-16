@@ -27,8 +27,8 @@ app.use(
             '/api-docs',
             /^\/api-docs\/.*/,
             '/status',
-            '/authors',
-            '/movies'
+            /^\/authors.*/,
+            /^\/movies.*/
         ],
     })
 );

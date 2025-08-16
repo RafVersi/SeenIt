@@ -7,9 +7,9 @@ export class Author {
     private fullname: string;
     private birth: Date;
     private age: number;
-    private img: string;
+    private img?: string;
 
-    constructor(author: {id?: number; firstname: string; lastname: string; fullname: string; birth: Date; age: number; img: string}){
+    constructor(author: {id?: number; firstname: string; lastname: string; fullname: string; birth: Date; age: number; img?: string}){
         this.validate(author);
 
         this.id = author.id;
@@ -21,7 +21,7 @@ export class Author {
         this.img = author.img;
     }
 
-    validate(author: {firstname: string; lastname: string; birth: Date; img: string}) {
+    validate(author: {firstname: string; lastname: string; birth: Date; img?: string}) {
         if(!author.firstname.trim()){
             throw new Error('firstname is required');
         }
@@ -31,7 +31,7 @@ export class Author {
         if(!author.birth){
             throw new Error('birthdate is required');
         }
-        if(!author.img.trim()){
+        if(!author.img?.trim()){
             throw new Error('image is required');
         }
     }
@@ -68,21 +68,15 @@ export class Author {
         return this.lastname;
     }
     getFullname(): string {
-        return `${this.firstname} ${this.lastname}`;
+        return this.fullname;
     }
     getBirth(): Date {
         return this.birth;
     }
     getAge(): number {
-        const now = new Date();
-        let age = now.getFullYear() - this.birth.getFullYear();
-        const hasHadBirthdayThisYear =
-            now.getMonth() > this.birth.getMonth() ||
-            (now.getMonth() === this.birth.getMonth() && now.getDate() >= this.birth.getDate());
-        if (!hasHadBirthdayThisYear) age--;
-        return age;
+        return this.age;
     }
-    getImg(): string {
+    getImg(): string | undefined{
         return this.img;
     }
 
@@ -106,7 +100,7 @@ export class Author {
             fullname,
             birth,
             age,
-            img
+            img: img || undefined
         });
     }
 }

@@ -14,7 +14,7 @@ model Author {
     fullname    String   @unique
     birth       DateTime 
     age         Int
-    img         String 
+    img         String?
     movies       Movie[]
 }
 
@@ -22,7 +22,7 @@ model Movie {
     id          Int      @id @default(autoincrement())
     name        String
     year        Int
-    img         String
+    img         String?
     author      Author   @relation(fields: [authorId], references: [id], onDelete: Cascade)
     authorId    Int
 }

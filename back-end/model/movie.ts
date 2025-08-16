@@ -1,14 +1,14 @@
 import { Movie as MoviePrisma, Author as AuthorPrisma } from '@prisma/client';
 import { Author } from './author';
 
-export class Movie{
+export class Movie {
     private id?: number;
     private name: string;
     private year: number;
-    private img: string;
+    private img?: string;
     private author: Author
 
-    constructor(movie: { id?: number; name: string; year: number; img: string; author: Author}){
+    constructor(movie: { id?: number; name: string; year: number; img?: string; author: Author }) {
         this.id = movie.id;
         this.name = movie.name;
         this.year = movie.year;
@@ -16,34 +16,34 @@ export class Movie{
         this.author = movie.author;
     }
 
-    validate(movie: {name: string; year: number; img: string; author: Author}) {
-        if(!movie.name.trim()){
+    validate(movie: { name: string; year: number; img: string; author: Author }) {
+        if (!movie.name.trim()) {
             throw new Error('Movie has to have a name');
         }
-        if(!movie.year){
+        if (!movie.year) {
             throw new Error('Year of release is required');
         }
-        if(!movie.img.trim()){
+        if (!movie.img.trim()) {
             throw new Error('Image is required');
         }
-        if(!movie.author){
+        if (!movie.author) {
             throw new Error('Author is required');
         }
     }
 
-    setId(id: number){
+    setId(id: number) {
         this.id = id;
     }
-    setName(name: string){
+    setName(name: string) {
         this.name = name;
     }
-    setYear(year: number){
+    setYear(year: number) {
         this.year = year;
     }
-    setFullname(img: string){
+    setFullname(img: string) {
         this.img = img;
     }
-    setAuthor(author: Author){
+    setAuthor(author: Author) {
         this.author = author;
     }
 
@@ -56,7 +56,7 @@ export class Movie{
     getYear(): number {
         return this.year;
     }
-    getImg(): string {
+    getImg(): string | undefined {
         return this.img;
     }
     getAuthor(): Author {
@@ -73,15 +73,17 @@ export class Movie{
         )
     }
 
-    static from({id, name, year, img, author}: MoviePrisma & {
+    static from({ id, name, year, img, author }: MoviePrisma & {
         author: AuthorPrisma;
-    }){
-            return new Movie({
-                id,
-                name,
-                year,
-                img,
-                author: Author.from(author)
-            });
-        }
+    }) {
+        return new Movie({
+            id,
+            name,
+            year,
+            img: img || undefined,
+            author: Author.from(author)
+        });
+    }
 }
+
+// ctrl A + ctrl KF

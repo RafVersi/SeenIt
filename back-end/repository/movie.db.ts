@@ -31,22 +31,6 @@ const getMovieById = async ({ id }: { id: number }): Promise<Movie | null> => {
     }
 };
 
-const getMovieByName = async ({ name }: { name: string }): Promise<Movie | null> => {
-    try {
-        const moviePrisma = await database.movie.findFirst({
-            where: { name },
-            include: {
-                author: true
-            }
-        });
-
-        return moviePrisma ? Movie.from(moviePrisma) : null;
-    } catch (error) {
-        console.error(error);
-        throw new Error('Database error. See server log for details.');
-    }
-};
-
 const createMovie = async (movie: Movie): Promise<Movie> => {
     try {
         const moviePrisma = await database.movie.create({
@@ -70,11 +54,18 @@ const createMovie = async (movie: Movie): Promise<Movie> => {
     }
 }
 
-const updateMovie = async (id: number, updates: Partial<{name: string; year: number; img: string;}>): Promise<Movie> => {
+const updateMovie = async (movie: Movie): Promise<Movie> => {
     try {
         const moviePrisma = await database.movie.update({
-            where: { id },
-            data: updates,
+            where: { id: movie.getId() },
+            data: {
+                name: movie.getName(),
+                year: movie.getYear(),
+                img: movie.getImg(),
+                author: {
+                    connect: { id: movie.getAuthor().getId() }
+                }
+            },
             include: {
                 author: true
             }
@@ -101,7 +92,6 @@ const deleteMovie = async (id: number): Promise<void> => {
 export default {
     getAllmovies,
     getMovieById,
-    getMovieByName,
     createMovie,
     updateMovie,
     deleteMovie

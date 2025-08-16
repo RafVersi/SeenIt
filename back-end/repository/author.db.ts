@@ -24,19 +24,6 @@ const getAuthorById = async ({ id }: { id: number }): Promise<Author | null> => 
     }
 };
 
-const getAuthorByFullname = async ({ fullname }: { fullname: string }): Promise<Author | null> => {
-    try {
-        const authorPrisma = await database.author.findFirst({
-            where: { fullname },
-        });
-
-        return authorPrisma ? Author.from(authorPrisma) : null;
-    } catch (error) {
-        console.error(error);
-        throw new Error('Database error. See server log for details.');
-    }
-};
-
 const createAuthor = async (author: Author): Promise<Author> => {
     try {
         const authorPrisma = await database.author.create({
@@ -57,11 +44,18 @@ const createAuthor = async (author: Author): Promise<Author> => {
     }
 }
 
-const updateAuthor = async (id: number, updates: Partial<{firstname: string; lastname: string; fullname: string; birth: Date; age: number; img: string}>): Promise<Author> => {
+const updateAuthor = async (author: Author): Promise<Author> => {
     try {
         const authorPrisma = await database.author.update({
-            where: { id },
-            data: updates,
+            where: { id: author.getId() },
+            data: {
+                firstname: author.getFisrtname(),
+                lastname: author.getLastname(),
+                fullname: author.getFullname(),
+                birth: author.getBirth(),
+                age: author.getAge(),
+                img: author.getImg()
+            },
         });
 
         return Author.from(authorPrisma);
@@ -85,7 +79,6 @@ const deleteAuthor = async (id: number): Promise<void> => {
 export default {
     getAllAuthors,
     getAuthorById,
-    getAuthorByFullname,
     createAuthor,
     updateAuthor,
     deleteAuthor

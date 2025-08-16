@@ -1,18 +1,17 @@
 export type AuthorInput = {
     id?: number;
-    firstname?: string;
-    lastname?: string;
+    firstname: string;
+    lastname: string;
     fullname?: string;
-    birth?: Date;
+    birth: Date;
     age?: number;
     img?: string; 
 }
 
 export type MovieInput = {
     id?: number;
-    name?: string;
-    year?: number;
+    name: string;
+    year: number;
     img?: string;
-    author?: AuthorInput;
+    authorId: number;
 }
-//

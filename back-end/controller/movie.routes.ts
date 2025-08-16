@@ -83,32 +83,6 @@ movieRouter.get('/:id', async (req: Request<{ id: string }>, res: Response, next
 
 /**
  * @swagger
- * /movies/name:
- *   get:
- *     summary: Get a specific movie by name
- *     parameters:
- *       - in: path
- *         name: name
- *         required: true
- *         schema:
- *           type: string
- *     responses:
- *       200:
- *         description: A movie object.
- */
-movieRouter.get('/name', async (req: Request<{ name: string }>, res: Response, next: NextFunction) => {
-    try {
-        const name = req.query.name as string;
-        const movie = await movieService.getMovieByName({name});
-
-        res.status(200).json(movie);
-    } catch (error) {
-        next(error);
-    }
-});
-
-/**
- * @swagger
  * /movies:
  *   post:
  *     summary: adding a movie
@@ -172,6 +146,9 @@ movieRouter.post(
  *           schema:
  *             type: object
  *             properties:
+ *               id:
+ *                 type: number
+ *                 format: int64
  *               name:
  *                 type: string
  *                 description: new name
@@ -233,13 +210,13 @@ movieRouter.put(
  */
 movieRouter.delete('/:id', async (req: Request, res: Response, next: NextFunction) => {
     try {
-        const id = parseInt(req.params.id, 10);
-        await movieService.deleteMovie({id});
+        const id = Number(req.params.id);
+        await movieService.deleteMovie(id);
 
         res.sendStatus(204);
     } catch (error) {
         next(error);
     }
-  });
+});
 
 export { movieRouter }
