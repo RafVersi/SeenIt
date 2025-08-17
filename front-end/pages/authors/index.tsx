@@ -25,9 +25,9 @@ const Authors: React.FC = () => {
             <Head>
                 <title>Auhtors</title>
             </Head>
-            <main className="p-6 min-h-screen flex flex-col items-center">
-                <section className="mt-5">
-                    {error && <p className="text-danger">{error}</p>} 
+            <main>
+                <section>
+                    {error && <p>{error}</p>} 
                     {isLoading && <p>Loading...</p>}
                     {data && (<AuthorOverview authors={data.authors}/>)}
                 </section>

@@ -14,3 +14,11 @@ export type CreateAuthor = {
     birth: Date;
     img: string; 
 }
+
+export type Movie = {
+    id: number;
+    name: string;
+    year: number;
+    img: string;
+    author: Author;
+}

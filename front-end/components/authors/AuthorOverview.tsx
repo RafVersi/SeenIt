@@ -64,7 +64,7 @@ const AuthorOverview: React.FC<Props> = ({
 
     return (
         <>
-            {statusMessage && <p className="mt-5">{statusMessage}</p>}
+            {statusMessage && <p>{statusMessage}</p>}
             <table>
                 <thead>
                     <tr>
