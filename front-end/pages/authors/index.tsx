@@ -1,5 +1,5 @@
 import AuthorService from "@/services/AuthorService";
-import AuthorOverview from '@/components/authors/AuthorOverview';
+import AuthorOverview from "@/components/authors/authorOverview";
 import Head from 'next/head';
 import { useState, useEffect } from 'react';
 import useSWR, { mutate } from 'swr';
