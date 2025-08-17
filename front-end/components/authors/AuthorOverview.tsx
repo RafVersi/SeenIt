@@ -1,6 +1,7 @@
 import AuthorService from "@/services/AuthorService";
 import { Component, useEffect, useState } from 'react';
 import { Author } from "@/types";
+import { mutate } from "swr";
 
 type Props = {
     authors: Author[];
@@ -45,8 +46,25 @@ const AuthorOverview: React.FC<Props> = ({
         }
     };
 
+    const handleDelete = async (id: number) => {
+        try {
+            const response = await AuthorService.deleteAuthor(id);
+
+            if (!response.ok) {
+                setStatusMessage("Failed to delete author.");
+                return;
+            }
+
+            setStatusMessage("Author deleted successfully.");
+            mutate("authors");
+        } catch (err) {
+            setStatusMessage("Error deleting author.");
+        }
+    };
+
     return (
         <>
+            {statusMessage && <p className="mt-5">{statusMessage}</p>}
             <table>
                 <thead>
                     <tr>
@@ -60,7 +78,6 @@ const AuthorOverview: React.FC<Props> = ({
                     </tr>
                 </thead>
                 <tbody>
-                    {statusMessage && <p>{statusMessage}</p>}
                     {authors.map((author) => (
                         <tr key={author.id}>
                             <td>{author.id}</td>
@@ -92,6 +109,11 @@ const AuthorOverview: React.FC<Props> = ({
                                 ) : (
                                     <button onClick={() => handleEdit(author)}>Edit</button>
                                 )}
+                            </td>
+                            <td>
+                                <button onClick={() => handleDelete(author.id)}>
+                                    Delete
+                                </button>
                             </td>
                         </tr>
                     ))}

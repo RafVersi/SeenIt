@@ -29,8 +29,18 @@ const updateAuthor = (author: Author) => {
     });
 }
 
+const deleteAuthor = (id: number) => {
+    return fetch(process.env.NEXT_PUBLIC_API_URL + `/authors/${id}`, {
+        method: "DELETE",
+        headers: {
+            "Content-Type": "application/json"
+        }
+    });
+};
+
 export default {
     getAllAuthors,
     createAuthor,
-    updateAuthor
+    updateAuthor,
+    deleteAuthor
 }
