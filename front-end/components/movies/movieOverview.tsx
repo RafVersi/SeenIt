@@ -21,11 +21,34 @@ const MovieOverview: React.FC<Props> = ({
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         if (!editedMovie) return;
+        
+        /*
         const { name, value } = e.target;
 
         setEditedMovie({
             ...editedMovie,
             [name]: value
+        });
+        */
+       
+        const { name, value } = e.target;
+        let parsedValue: any = value;
+
+        if (name === "year" || name === "id") {
+            parsedValue = Number(value);
+        }
+
+        if (name === "author") {
+            setEditedMovie({
+                ...editedMovie,
+                author: { ...editedMovie.author, id: Number(value) }
+            });
+            return;
+        }
+
+        setEditedMovie({
+            ...editedMovie,
+            [name]: parsedValue
         });
     };
 
