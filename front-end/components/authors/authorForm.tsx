@@ -9,8 +9,6 @@ const AuthorForm: React.FC = () => {
     const [status, setStatus] = useState<{ message: string; type: 'success' | 'error' } | null>(null);
     const [isLoading, setIsLoading] = useState(false);
 
-
-
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         if (!firstname.trim() || !lastname.trim() || !birth || !img.trim()){
