@@ -85,7 +85,7 @@ movieRouter.get('/:id', async (req: Request<{ id: string }>, res: Response, next
  * @swagger
  * /movies:
  *   post:
- *     summary: adding a movie
+ *     summary: Add a new movie
  *     requestBody:
  *       required: true
  *       content:
@@ -95,31 +95,37 @@ movieRouter.get('/:id', async (req: Request<{ id: string }>, res: Response, next
  *             properties:
  *               name:
  *                 type: string
- *                 description: new name
+ *                 description: Movie name
  *               year:
- *                 type: number
- *                 format: int64
- *                 description: date of release
+ *                 type: integer
+ *                 format: int32
+ *                 description: Release year
  *               img:
  *                 type: string
- *                 description: image
- *               authorId:
- *                 type: number
- *                 format: int64
- *                 description: author id
+ *                 description: Poster or image URL
+ *               author:
+ *                 type: object
+ *                 description: Author of the movie
+ *                 properties:
+ *                   id:
+ *                     type: integer
+ *                     format: int64
+ *                     description: Existing author ID
+ *                 required:
+ *                   - id
  *             required:
  *               - name
  *               - year
- *               - img
- *               - authorId
+ *               - author
  *     responses:
  *       201:
- *         description: created movie
+ *         description: Movie created
  *         content:
  *           application/json:
  *             schema:
  *               $ref: '#/components/schemas/Movie'
  */
+
 movieRouter.post(
     '/',
     async (req: Request, res: Response, next: NextFunction) => {
@@ -147,27 +153,33 @@ movieRouter.post(
  *             type: object
  *             properties:
  *               id:
- *                 type: number
- *                 format: int64
+ *                 type: integer
+ *                 format: int32
+ *                 description: id movie
  *               name:
  *                 type: string
- *                 description: new name
+ *                 description: Movie name
  *               year:
- *                 type: number
- *                 format: int64
- *                 description: date of release
+ *                 type: integer
+ *                 format: int32
+ *                 description: Release year
  *               img:
  *                 type: string
- *                 description: image
- *               authorId:
- *                 type: number
- *                 format: int64
- *                 description: author id
+ *                 description: Poster or image URL
+ *               author:
+ *                 type: object
+ *                 description: Author of the movie
+ *                 properties:
+ *                   id:
+ *                     type: integer
+ *                     format: int64
+ *                     description: Existing author ID
+ *                 required:
+ *                   - id
  *             required:
  *               - name
  *               - year
- *               - img
- *               - authorId
+ *               - author
  *     responses:
  *       201:
  *         description: Author has succesfully been updated

@@ -13,5 +13,5 @@ export type MovieInput = {
     name: string;
     year: number;
     img?: string;
-    authorId: number;
+    author: AuthorInput;
 }

@@ -15,33 +15,42 @@ const getMovieById = async ({ id }: { id: number }): Promise<Movie> => {
 };
 
 const createMovie = async (movieInput: MovieInput): Promise<Movie> => {
-    const { id, name, year, img, authorId } = movieInput
-    const author = await authorDb.getAuthorById({ id: authorId });
-    if (!author) {
-        throw new Error(`Author with ID ${movieInput.authorId} not found`);
+    const { id, name, year, img, author } = movieInput
+
+    if (author.id === undefined) {
+        throw new Error("Author ID is required to create a movie.");
+    }
+
+    const findAuthor = await authorDb.getAuthorById({ id: author.id });
+    if (!findAuthor) {
+        throw new Error(`Author with ID ${author.id} not found`);
     };
 
     const newMovie = new Movie({
         name: name,
         year: year,
         img: img,
-        author
+        author: findAuthor  
     });
 
     return await movieDb.createMovie(newMovie);
 }
 
 const updateMovie = async (movieInput: MovieInput): Promise<Movie | null> => {
-    const { id, name, year, img, authorId } = movieInput
+    const { id, name, year, img, author } = movieInput
 
     if (!id) {
         throw new Error('Movie ID is required for update');
     }
 
+    if (author.id === undefined) {
+        throw new Error("Author ID is required to create a movie.");
+    }
+
     const existingMovie = await getMovieById({ id });
 
-    const author = await authorDb.getAuthorById({ id: authorId });
-    if (!author) {
+    const findAuthor = await authorDb.getAuthorById({ id: author.id });
+    if (!findAuthor) {
         throw new Error('Author does not exist');
     }
 
@@ -50,7 +59,7 @@ const updateMovie = async (movieInput: MovieInput): Promise<Movie | null> => {
         name: name,
         year: year,
         img: img,
-        author
+        author: findAuthor  
     });
 
     return await movieDb.updateMovie(updateMovie);
