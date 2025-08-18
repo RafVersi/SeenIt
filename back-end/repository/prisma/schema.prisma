@@ -1,0 +1,39 @@
+generator client {
+    provider = "prisma-client-js"
+}
+
+datasource db {
+    provider = "postgresql"
+    url = env("DATABASE_URL")
+}
+
+model Author {
+    id          Int      @id @default(autoincrement())
+    firstname   String
+    lastname    String
+    fullname    String   @unique
+    birth       DateTime 
+    age         Int
+    img         String?
+    movies       Movie[]
+}
+
+model Movie {
+    id          Int      @id @default(autoincrement())
+    name        String
+    year        Int
+    img         String?
+    author      Author   @relation(fields: [authorId], references: [id], onDelete: Cascade)
+    authorId    Int
+}
+
+model User {
+    id          Int     @id @default(autoincrement())
+    firstname   String
+    lastname    String
+    username    String  @unique
+    email       String  @unique
+    img         String
+    password    String
+    role        String
+}

@@ -105,3 +105,6 @@ dist
 
 .DS_Store
 .vscode
+
+#ignore migrations
+repository/prisma/migrations
