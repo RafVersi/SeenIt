@@ -22,3 +22,19 @@ export type Movie = {
     img: string;
     author: Author;
 }
+
+export type User = {
+    id?: number;
+    firstname?: string;
+    lastname?: string;
+    username: string;
+    email?: string;
+    img?: string;
+    password: string;
+    role?: string;
+};
+
+export type StatusMessage = {
+    message: string;
+    type: "error" | "success";
+};

@@ -4,8 +4,17 @@ import Head from 'next/head';
 import { useState, useEffect } from 'react';
 import useSWR, { mutate } from 'swr';
 import useInterval from 'use-interval';
+import { User } from "@/types";
 
 const Authors: React.FC = () => {
+    const [loggedInUser, setLoggedInUser] = useState<User | null>(null);
+
+    useEffect(() => {
+        const user = localStorage.getItem('loggedInUser');
+        if (user) {
+        setLoggedInUser(JSON.parse(user));
+        }
+    }, []);
 
     const fetch = async () => {
         const response = await AuthorService.getAllAuthors();
@@ -27,9 +36,20 @@ const Authors: React.FC = () => {
             </Head>
             <main>
                 <section>
-                    {error && <p>{error}</p>} 
-                    {isLoading && <p>Loading...</p>}
-                    {data && (<AuthorOverview authors={data.authors}/>)}
+                    <div>
+                        {loggedInUser?.role === 'admin' ? (
+                            <>
+                                {error && <p>{error}</p>} 
+                                {isLoading && <p>Loading...</p>}
+                                {data && (<AuthorOverview authors={data.authors}/>)}
+                            </>
+                            ) : (
+                            <p>Not authorized to watch this</p>
+                        )}
+                    </div>
+                    <div>
+
+                    </div>
                 </section>
             </main>
         </>
