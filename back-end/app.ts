@@ -8,6 +8,7 @@ import swaggerUi from 'swagger-ui-express';
 import { expressjwt } from 'express-jwt';
 import { authorRouter } from './controller/author.routes';
 import { movieRouter } from './controller/movie.routes';
+import { userRouter } from './controller/user.routes';
 
 const app = express();
 
@@ -28,13 +29,15 @@ app.use(
             /^\/api-docs\/.*/,
             '/status',
             /^\/authors.*/,
-            /^\/movies.*/
+            /^\/movies.*/,
+            /^\/users.*/
         ],
     })
 );
 
 app.use('/authors', authorRouter);
 app.use('/movies', movieRouter);
+app.use('/users', userRouter);
 
 app.get('/status', (req, res) => {
     res.json({ message: 'SeenIt API is running...' });

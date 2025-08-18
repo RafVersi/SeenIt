@@ -17,3 +17,21 @@ export type MovieInput = {
     img?: string;
     author: AuthorInput;
 }
+
+export type UserInput = {
+    id?: number;
+    firstname: string;
+    lastname: string;
+    username: string;
+    email: string;
+    img: string;
+    password: string;
+    role: Role;
+};
+
+export type AuthenticationResponse = {
+    token: string;
+    username: string;
+    fullname: string;
+    role: string;
+};
