@@ -1,3 +1,5 @@
+export type Role = 'admin' | 'user' | 'moderator';
+
 export type AuthorInput = {
     id?: number;
     firstname: string;

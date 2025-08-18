@@ -26,3 +26,14 @@ model Movie {
     author      Author   @relation(fields: [authorId], references: [id], onDelete: Cascade)
     authorId    Int
 }
+
+model User {
+    id          Int     @id @default(autoincrement())
+    firstname   String
+    lastname    String
+    username    String  @unique
+    email       String  @unique
+    img         String
+    password    String
+    role        String
+}
